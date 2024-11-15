@@ -8,7 +8,10 @@ module.exports = {
       colors: {
         primaryColor: '#5A2DFF',
         secondaryColor: '#8E6FFF',
-      }
+      },
+      fontFamily: {
+        russo: ['"Russo One"', 'sans-serif'],
+      },
     },
   },
   plugins: [],
