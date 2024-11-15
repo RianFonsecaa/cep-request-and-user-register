@@ -1,0 +1,62 @@
+
+<main class="flex flex-row justify-center p-12 space-x-6 h-screen mb-14">
+
+    <div class="p-1 space-y-6 w-[552px]">
+        <h2 class="font-bold text-4xl text-gray-700">Cadastro</h2>
+        <div class="bg-[#8543ff] p-1 rounded-md w-[104px]"></div>
+        <form id="cadastro-form" class="flex flex-col space-y-6" [formGroup]="registerForm">
+
+            <app-primary-input controlName="nome" placeholder="Nome Completo"
+                [control]="getControl('nome')">
+            </app-primary-input>
+
+            <div class="flex flex-row space-x-2 w-full">
+                <app-primary-input controlName="cpf" placeholder="CPF - 000.000.000-00" type="text"
+                    [control]="getControl('cpf')" class="w-3/4">
+                </app-primary-input>
+                <app-primary-input controlName="dataNascimento" placeholder="*Data de Nascimento" type="date"
+                    [control]="getControl('dataNascimento')" class="w-2/4">
+                </app-primary-input>
+            </div>
+
+            <app-primary-input controlName="email" placeholder="Endereço de E-mail" type="email"
+                [control]="getControl('email')">
+            </app-primary-input>
+
+            <div class="flex flex-row space-x-2 w-full">
+                <app-primary-input controlName="cep" placeholder="CEP - 00000-000" type="text" [control]="getControl('cep')"
+                    class="w-2/4">
+                </app-primary-input>
+                <app-primary-input controlName="estado" placeholder="Estado" type="text"
+                    [control]="getControl('estado')" class="w-3/4">
+                </app-primary-input>
+            </div>
+
+            <app-primary-input controlName="cidade" placeholder="Cidade" type="text" [control]="getControl('cidade')">
+            </app-primary-input>
+
+            <app-primary-input controlName="bairro" placeholder="Bairro" type="text" [control]="getControl('bairro')">
+            </app-primary-input>
+
+            <app-primary-input controlName="rua" placeholder="Rua" type="text" [control]="getControl('rua')">
+            </app-primary-input>
+
+            <div class="flex flex-row space-x-2 w-full">
+                <app-primary-input controlName="numero" placeholder="Número" type="text"
+                    [control]="getControl('numero')" class="w-4/12">
+                </app-primary-input>
+                <app-primary-input controlName="complemento" placeholder="Complemento" type="text"
+                    [control]="getControl('complemento')" class="w-10/12">
+                </app-primary-input>
+            </div>
+
+            <div class="flex w-full justify-center pt-5">
+                <button type="button" class="focus:outline-none h-16 w-3/5 text-white text-lg shadow-md shadow-slate-500 bg-[#7226ff] hover:bg-[#6634c4] focus:ring-4 focus:ring-[#9f6dfd] font-medium rounded-lg px-5 py-2.5 mb-2">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="p-1 bg-gray-300 border-2 w-[1174px]">
+
+    </div>
+</main>
