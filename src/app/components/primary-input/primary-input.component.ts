@@ -15,6 +15,7 @@ export class PrimaryInputComponent implements OnInit {
   @Input() controlName: string = '';
   @Input() type: InputTypes = 'text';
   @Input() placeholder: string = '';
+  @Input() maxlength?: number;
   @Input() control!: FormControl;
 
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class PrimaryInputComponent implements OnInit {
       this.updateInputClasses(); // Adiciona classes de erro ao campo
 
       if (this.control.errors?.['required']) {
-        return 'Este campo é obrigatório.';
+        return 'Campo obrigatório.';
       }
       if (this.control.errors?.['minlength']) {
         return `O campo precisa ter pelo menos ${this.control.errors['minlength'].requiredLength} caracteres.`;
@@ -35,7 +36,10 @@ export class PrimaryInputComponent implements OnInit {
         return 'Digite um e-mail válido.';
       }
       if (this.control.errors?.['pattern']) {
-        return 'Formato incorreto inserido!';
+        return 'Insira um CEP válido.';
+      }
+      if (this.control.errors?.['invalidCep']) {
+        return 'CEP inexistente.';
       }
     } else {
       this.removeErrorClasses(); // Remove classes de erro caso o campo esteja válido

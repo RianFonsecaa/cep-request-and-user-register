@@ -1,30 +1,36 @@
+import { UserService } from '../../services/user.service';
 import { Component } from '@angular/core';
+import { User } from '../../models/User';
 import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { viaCepRequestService } from '../../services/viaCepRequest.service';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PrimaryInputComponent, ReactiveFormsModule],
+  imports: [PrimaryInputComponent, ReactiveFormsModule, NgFor],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   registerForm: FormGroup;
+  users: User[] = [];
 
-  constructor(private viaCepRequest: viaCepRequestService) {
+  constructor(
+    private viaCepRequest: viaCepRequestService, private userService: UserService
+  ) {
     this.registerForm = new FormGroup({
       nome: new FormControl('', Validators.required),
       cpf: new FormControl('', [
         Validators.required,
-        Validators.pattern(/\d{3}\.\d{3}\.\d{3}-\d{2}/)
+        Validators.pattern(/^\d{3}(\.\d{3}){2}-\d{2}$|^\d{11}$/)
       ]),
       dataNascimento: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       cep: new FormControl('', [
         Validators.required,
-        Validators.pattern(/\d{5}-\d{3}/)
+        Validators.pattern(/^\d{5}-?\d{3}$/)
       ]),
       estado: new FormControl({ value: '', disabled: true }, Validators.required),
       cidade: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -34,57 +40,11 @@ export class HomeComponent {
       complemento: new FormControl('')
     });
   }
-  
-  ngOnInit(): void{
+
+  ngOnInit(): void {
     this.observerCepField();
-  }
-
-  observerCepField(){
-    this.registerForm.get('cep')?.valueChanges.subscribe(value => {
-      if (this.getControl('cep').valid){
-        this.getAdress();
-      }
-    })
-  }
-
-  getAdress() {
-    const cep = this.registerForm.get('cep')?.value;
-    this.viaCepRequest.getAdressByCep(cep).subscribe({
-      next: (response) => {
-        this.registerForm.patchValue({
-          estado: response.estado,
-          cidade: response.localidade,
-          bairro: response.bairro,
-          rua: response.logradouro,
-        });
-  
-        if (response.estado === '') {
-          this.registerForm.get('estado')?.enable();
-        } else {
-          this.registerForm.get('estado')?.disable();
-        }
-  
-        if (response.localidade === '') {
-          this.registerForm.get('cidade')?.enable();
-        } else {
-          this.registerForm.get('cidade')?.disable();
-        }
-  
-        if (response.bairro === '') {
-          this.registerForm.get('bairro')?.enable();
-        } else {
-          this.registerForm.get('bairro')?.disable();
-        }
-  
-        if (response.logradouro === '') {
-          this.registerForm.get('rua')?.enable();
-        } else {
-          this.registerForm.get('rua')?.disable();
-        }
-      },
-      error: (err) => {
-        console.error('Erro ao buscar endereço:', err);
-      }
+    this.userService.users$.subscribe((users) => {
+      this.users = users;
     });
   }
 
@@ -92,7 +52,54 @@ export class HomeComponent {
     return this.registerForm.get(name) as FormControl;
   }
 
-  getErrorText(name: string): string {
-    return 'errorText' + name;
+  observerCepField() {
+    this.registerForm.get('cep')?.valueChanges.subscribe(value => {
+      if (this.getControl('cep').valid) {
+        this.getAdress();
+      }
+    });
+  }
+
+  getAdress() {
+    const cep = this.registerForm.get('cep')?.value;
+    this.viaCepRequest.getAdressByCep(cep).subscribe({
+      next: (response) => {
+        if (response.erro) {
+          this.registerForm.get('cep')?.setErrors({ invalidCep: true });
+        } else {
+          this.registerForm.patchValue({
+            estado: response.estado,
+            cidade: response.localidade,
+            bairro: response.bairro,
+            rua: response.logradouro,
+          });
+
+          this.toggleFieldState('estado', response.estado);
+          this.toggleFieldState('cidade', response.localidade);
+          this.toggleFieldState('bairro', response.bairro);
+          this.toggleFieldState('rua', response.logradouro);
+        }
+      },
+    });
+  }
+
+  toggleFieldState(field: string, value: string) {
+    if (value === '') {
+      this.registerForm.get(field)?.enable();
+    } else {
+      this.registerForm.get(field)?.disable();
+    }
+  }
+
+  submit() {
+    if (this.registerForm.valid) {
+      const newUser = this.registerForm.getRawValue() as User;
+      this.userService.createUser(newUser);
+      this.registerForm.reset();
+    } else {
+      Object.values(this.registerForm.controls).forEach(control => {
+        control.markAsTouched();
+      });
+    }
   }
 }
