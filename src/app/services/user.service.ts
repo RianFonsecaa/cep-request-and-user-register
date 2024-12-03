@@ -18,8 +18,7 @@ export class UserService {
     this.fetchUsers();
   }
 
-  createUser(newUser: User) {
-
+  createUser(newUser: User): void {
     newUser.cep = this.formatCep(newUser.cep);
     newUser.cpf = this.formatCpf(newUser.cpf);
 
@@ -38,7 +37,6 @@ export class UserService {
     return cep.replace(/^(\d{5})(\d{3})$/, '$1-$2');
   }
 
-  // Função para formatar o CPF (xxx.xxx.xxx-xx)
   formatCpf(cpf: string): string {
     return cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
   }
@@ -53,4 +51,5 @@ export class UserService {
       }
     });
   }
+
 }

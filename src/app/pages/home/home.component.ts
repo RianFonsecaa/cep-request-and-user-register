@@ -4,12 +4,12 @@ import { User } from '../../models/User';
 import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { viaCepRequestService } from '../../services/viaCepRequest.service';
-import { NgFor } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PrimaryInputComponent, ReactiveFormsModule, NgFor],
+  imports: [PrimaryInputComponent, ReactiveFormsModule, NgFor, NgClass],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

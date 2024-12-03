@@ -1,5 +1,5 @@
-<main class="flex flex-row h-[680px] justify-center pb-2 p-8 space-x-6 mb-14">
-    <section class="p-1 space-y-6 w-4/12 h-full">
+<main class="flex flex-row h-[730px] justify-center p-12 space-x-6">
+    <section class="flex flex-col p-1 space-y-6 w-4/12 h-full">
         <h2 class="font-bold text-4xl text-gray-700">Cadastro</h2>
         <div class="bg-[#8543ff] p-1 rounded-md w-[104px]"></div>
         <form id="cadastro-form" class="flex flex-col space-y-2 w-full" [formGroup]="registerForm">
@@ -51,7 +51,13 @@
             </div>
 
             <div class="flex w-full justify-center pt-5">
-                <button (click)="submit()" type="submit"
+                <button (click)="submit()" 
+                type="submit"  
+                [disabled]="registerForm.invalid"
+                [ngClass]="{
+                  'bg-[#7226ffa9] text-opacity-60 border-0 cursor-not-allowed': registerForm.invalid,
+                  'bg-[#7226ff] shadow-md hover:bg-[#522fb4]': registerForm.valid
+                }"
                     class="focus:outline-none h-16 w-3/5 text-white text-lg transition-all duration-300 shadow-md shadow-slate-500 bg-[#7226ff] hover:bg-[#522fb4] focus:ring-4 focus:ring-[#9f6dfd] font-medium rounded-lg px-5 py-2.5 mb-2">Enviar</button>
             </div>
         </form>
@@ -62,7 +68,7 @@
         <div class="flex flex-row py-2 h-1/12">
             <input type="text" placeholder="Buscar por nome"
                 class="h-10 w-4/12 border-2 border-slate-300 text-sm text-slate-600 rounded-l-lg focus:ring-1 focus:ring-blue-500 focus:outline-none p-3 ">
-            <button class="flex justify-center items-center bg-primaryColor h-10 w-12 rounded-r-lg">
+            <button class="flex justify-center items-center bg-primaryColor h-10 w-12 rounded-r-lg" >
                 <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                     height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
