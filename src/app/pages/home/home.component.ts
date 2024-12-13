@@ -1,21 +1,22 @@
 import { UserService } from '../../services/user.service';
-import { Component } from '@angular/core';
-import { User } from '../../models/User';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { viaCepRequestService } from '../../services/viaCepRequest.service';
 import { NgClass, NgFor } from '@angular/common';
+import { TableComponent } from "../../components/table/table.component";
+import { User } from '../../models/User';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PrimaryInputComponent, ReactiveFormsModule, NgFor, NgClass],
+  imports: [PrimaryInputComponent, ReactiveFormsModule, NgFor, NgClass, TableComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   registerForm: FormGroup;
-  users: User[] = [];
+  userId: string = '';
 
   constructor(
     private viaCepRequest: viaCepRequestService, private userService: UserService
@@ -42,22 +43,26 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
-    this.observerCepField();
-    this.userService.users$.subscribe((users) => {
-      this.users = users;
+    this.userService.userId$.subscribe((id: string | null) => {
+      if (id) {
+        this.userId = id;
+        this.loadUserData();
+      }
+    });
+  }
+
+  loadUserData(): void {
+    this.userService.getUserById(this.userId).subscribe((user: User) => {
+      this.toggleFieldState('estado', user.estado);
+      this.toggleFieldState('cidade', user.cidade);
+      this.toggleFieldState('bairro', user.bairro);
+      this.toggleFieldState('rua', user.rua);
+      this.registerForm.patchValue(user);
     });
   }
 
   getControl(name: string): FormControl {
     return this.registerForm.get(name) as FormControl;
-  }
-
-  observerCepField() {
-    this.registerForm.get('cep')?.valueChanges.subscribe(value => {
-      if (this.getControl('cep').valid) {
-        this.getAdress();
-      }
-    });
   }
 
   getAdress() {
@@ -93,8 +98,12 @@ export class HomeComponent {
 
   submit() {
     if (this.registerForm.valid) {
-      const newUser = this.registerForm.getRawValue() as User;
-      this.userService.createUser(newUser);
+      const userData = this.registerForm.getRawValue();
+      if (this.userId) {
+        this.userService.editUser(userData, this.userId);
+      } else {
+        this.userService.createUser(userData);
+      }
       this.registerForm.reset();
     } else {
       Object.values(this.registerForm.controls).forEach(control => {
