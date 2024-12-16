@@ -1,21 +1,26 @@
 import { Component } from '@angular/core';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, ReactiveFormsModule, TitleCasePipe],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
 export class TableComponent {
   users: User[] = [];
   filteredUsers: User[] = [];
-  searchTerm: string = '';
   isModalOpen: boolean = false;
+  searchValue: string = '';
+  selectedField: keyof User = 'nome';
   userId: string = '';
+  campos: (keyof User)[] = [
+    'nome', 'cpf', 'nascimento', 'email', 'cep', 'estado', 'cidade', 'bairro', 'rua', 'numero', 'complemento'
+  ];
 
   constructor(private userService: UserService) { }
 
@@ -25,6 +30,7 @@ export class TableComponent {
       this.updateFilteredUsers();
     });
   }
+
   openDeleteModal(id: string) {
     this.userId = id;
     this.isModalOpen = true;
@@ -34,10 +40,11 @@ export class TableComponent {
     this.isModalOpen = false;
   }
 
-  search(searchField: HTMLInputElement): void {
-    this.searchTerm = searchField.value.trim().toLowerCase();
-    this.filteredUsers = this.userService.getUserByName(this.searchTerm, this.users);
-    searchField.value = '';
+  // Atualizando o método de busca para usar o FormControl diretamente
+  search(searchInput: string): void {
+    this.searchValue = searchInput.trim().toLowerCase();
+    this.filteredUsers = this.userService.getUserByField(this.selectedField, this.searchValue, this.users);
+    searchInput = '';
   }
 
   delete(id: string): void {
@@ -49,9 +56,14 @@ export class TableComponent {
     this.userService.setUserId(id);
   }
 
+  onCampoChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement; // Fazendo o casting para HTMLSelectElement
+    this.selectedField = selectElement.value as keyof User; // Atualiza o valor selecionado
+  }
+
   private updateFilteredUsers(): void {
-    if (this.searchTerm) {
-      this.filteredUsers = this.userService.getUserByName(this.searchTerm, this.users);
+    if (this.searchValue) {
+      this.filteredUsers = this.userService.getUserByField(this.selectedField, this.searchValue, this.users);
     } else {
       this.filteredUsers = this.users;
     }

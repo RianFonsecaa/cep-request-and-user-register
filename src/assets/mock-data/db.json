@@ -3,7 +3,7 @@
     {
       "nome": "Guilherme Sampaio",
       "cpf": "234.567.890-11",
-      "dataNascimento": "2003-12-03",
+      "nascimento": "2003-12-03",
       "email": "guilherme@example.com",
       "cep": "45300000",
       "estado": "Bahia",
@@ -17,7 +17,7 @@
     {
       "nome": "João Oliveira",
       "cpf": "123.456.789-00",
-      "dataNascimento": "1990-03-15",
+      "nascimento": "1990-03-15",
       "email": "joao.oliveira@example.com",
       "cep": "01001-000",
       "estado": "São Paulo",
@@ -31,7 +31,7 @@
     {
       "nome": "Maria Ferreira",
       "cpf": "345.678.901-22",
-      "dataNascimento": "1987-07-10",
+      "nascimento": "1987-07-10",
       "email": "maria.ferreira@example.com",
       "cep": "30190-110",
       "estado": "Minas Gerais",
@@ -45,7 +45,7 @@
     {
       "nome": "Pedro Santos",
       "cpf": "987.654.321-33",
-      "dataNascimento": "1995-12-25",
+      "nascimento": "1995-12-25",
       "email": "pedro.santos@example.com",
       "cep": "40020-280",
       "estado": "Bahia",
@@ -59,7 +59,7 @@
     {
       "nome": "Juliana Lima",
       "cpf": "111.222.333-44",
-      "dataNascimento": "1983-05-05",
+      "nascimento": "1983-05-05",
       "email": "juliana.lima@example.com",
       "cep": "60060-120",
       "estado": "Ceará",
@@ -73,7 +73,7 @@
     {
       "nome": "Carla Mendes",
       "cpf": "555.666.777-88",
-      "dataNascimento": "1989-04-12",
+      "nascimento": "1989-04-12",
       "email": "carla.mendes@example.com",
       "cep": "88010-001",
       "estado": "Santa Catarina",
@@ -87,7 +87,7 @@
     {
       "nome": "Rafael Almeida",
       "cpf": "222.333.444-55",
-      "dataNascimento": "1992-11-08",
+      "nascimento": "1992-11-08",
       "email": "rafael.almeida@example.com",
       "cep": "69005-070",
       "estado": "Amazonas",
@@ -101,7 +101,7 @@
     {
       "nome": "Fernanda Rocha",
       "cpf": "999.888.777-66",
-      "dataNascimento": "1980-02-22",
+      "nascimento": "1980-02-22",
       "email": "fernanda.rocha@example.com",
       "cep": "70040-010",
       "estado": "Distrito Federal",
@@ -115,7 +115,7 @@
     {
       "nome": "Gustavo Martins",
       "cpf": "333.444.555-66",
-      "dataNascimento": "1997-06-15",
+      "nascimento": "1997-06-15",
       "email": "gustavo.pereira@example.com",
       "cep": "59014-100",
       "estado": "Rio Grande do Norte",
@@ -129,7 +129,7 @@
     {
       "nome": "Lucas Batista",
       "cpf": "777.888.999-00",
-      "dataNascimento": "1988-03-18",
+      "nascimento": "1988-03-18",
       "email": "lucas.batista@example.com",
       "cep": "60010-020",
       "estado": "Ceará",
@@ -143,7 +143,7 @@
     {
       "nome": "Ricardo Martins",
       "cpf": "112.223.334-45",
-      "dataNascimento": "1985-01-05",
+      "nascimento": "1985-01-05",
       "email": "ricardo.martins@example.com",
       "cep": "81200-100",
       "estado": "Paraná",
@@ -157,7 +157,7 @@
     {
       "nome": "Priscila Nunes",
       "cpf": "123.321.456-78",
-      "dataNascimento": "1993-09-05",
+      "nascimento": "1993-09-05",
       "email": "priscila.nunes@example.com",
       "cep": "64000-070",
       "estado": "Piauí",
@@ -167,6 +167,34 @@
       "numero": "450",
       "complemento": "Loja A",
       "id": 33
+    },
+    {
+      "nome": "Rian Silva da Fonseca",
+      "cpf": "112.943.255-66",
+      "nascimento": "2004-03-08",
+      "email": "riansfonseca3@gmail.com",
+      "cep": "44380-000",
+      "estado": "Bahia",
+      "cidade": "Cruz das Almas",
+      "bairro": "Dona Rosa",
+      "rua": "Deoclécio do Carmo",
+      "numero": "278",
+      "complemento": "Casa branca, portão prata",
+      "id": 37
+    },
+    {
+      "nome": "RAFAEL SILVA ",
+      "cpf": "060.114.905-06",
+      "nascimento": "1997-05-03",
+      "email": "rafaelsfonseca97@gmail.com",
+      "cep": "44380000",
+      "estado": "Bahia",
+      "cidade": "Cruz das Almas",
+      "bairro": "Dona Rosa",
+      "rua": "Rua Deoclécio do carmo",
+      "numero": "278",
+      "complemento": "casa",
+      "id": 38
     }
   ]
 }
