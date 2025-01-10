@@ -1,0 +1,127 @@
+<div *ngIf="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
+    <div class="relative bg-white rounded-lg shadow z-20">
+        <button type="button" (click)="closeModal()"
+            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+        </button>
+        <div class="p-4 md:p-5 text-center">
+            <svg class="mx-auto mb-4 text-primaryColor w-11 h-11" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Você tem certeza que deseja excluir
+                esse usuário?</h3>
+            <button type="button"
+                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+                (click)="delete(userId)">
+                Excluir
+            </button>
+            <button (click)="closeModal()" type="button"
+                class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-slate-200 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primaryColor focus:z-10 focus:ring-4 focus:ring-gray-100">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="flex flex-col space-y-2 h-full">
+    <form (submit)="search(searchField); $event.preventDefault()"
+        class="flex flex-row rounded-lg h-14 p-1 w-fit bg-slate-50 border outline-none focus-within:ring-1 focus-within:ring-blue-500">
+        <input #searchField type="text" placeholder="Buscar por nome"
+            class="h-full w-full text-sm bg-slate-50 text-slate-600 rounded-l-lg group outline-none p-3">
+        <button type="submit" class="flex justify-center items-center text-white bg-primaryColor p-2 m-1 rounded-lg">
+            <svg class="w-6 h-6 text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+            </svg>
+            Buscar
+        </button>
+    </form>
+
+    <div class="overflow-scroll h-11/12 border-2 border-gray-300">
+        <table class="w-full table-auto bg-white border whitespace-nowrap">
+            <thead>
+                <tr class="bg-secondaryColor text-white">
+                    <th class="p-4 border w-32">Ações</th>
+                    <th class="p-4 border w-72">Nome</th>
+                    <th class="p-4 border w-72">CPF</th>
+                    <th class="p-4 border w-72">Data de Nascimento</th>
+                    <th class="p-4 border w-72">Email</th>
+                    <th class="p-4 border w-44">CEP</th>
+                    <th class="p-4 border w-60">Estado</th>
+                    <th class="p-4 border w-60">Cidade</th>
+                    <th class="p-4 border w-96">Endereço</th>
+                    <th class="p-4 border w-80">Complemento</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="filteredUsers.length > 0; else allUsers">
+                <tr *ngFor="let user of filteredUsers" class="text-sm">
+                    <td class="flex flex-row bg-gray-200 border border-white justify-center space-x-2 p-2 text-center">
+                        <button class="transition duration-155 hover:scale-125" (click)="update(user.id)">
+                            <svg class="w-6 h-6 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28" />
+                            </svg>
+                        </button>
+                        <button class="transition duration-150 hover:scale-125" (click)="openDeleteModal(user.id)">
+                            <svg class="w-6 h-6 text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+
+                    </td>
+                    <td class="p-3 border">{{ user.nome }}</td>
+                    <td class="p-3 border">{{ user.cpf }}</td>
+                    <td class="p-3 border">{{ user.dataNascimento }}</td>
+                    <td class="p-3 border">{{ user.email }}</td>
+                    <td class="p-3 border">{{ user.cep }}</td>
+                    <td class="p-3 border">{{ user.estado }}</td>
+                    <td class="p-3 border">{{ user.cidade }}</td>
+                    <td class="p-3 border">{{ user.rua }}, {{ user.numero }} - {{ user.bairro }}</td>
+                    <td class="p-3 border">{{ user.complemento }}</td>
+                </tr>
+            </tbody>
+            <ng-template #allUsers>
+                <tr *ngFor="let user of users" class="text-sm">
+                    <td class="flex flex-row bg-gray-200 border border-white justify-center space-x-2 p-3 text-center">
+                        <button class="transition duration-155 hover:scale-125" (click)="update(user.id)">
+                            <svg class="w-6 h-6 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28" />
+                            </svg>
+                        </button>
+                        <button class="transition duration-150 hover:scale-125" (click)="openDeleteModal(user.id)">
+                            <svg class="w-6 h-6 text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </td>
+                    <td class="p-3 border ">{{ user.nome }}</td>
+                    <td class="p-3 border ">{{ user.cpf }}</td>
+                    <td class="p-3 border ">{{ user.dataNascimento }}</td>
+                    <td class="p-3 border ">{{ user.email }}</td>
+                    <td class="p-3 border ">{{ user.cep }}</td>
+                    <td class="p-3 border ">{{ user.estado }}</td>
+                    <td class="p-3 border ">{{ user.cidade }}</td>
+                    <td class="p-3 border ">{{ user.rua }}, {{ user.numero }} - {{ user.bairro }}</td>
+                    <td class="p-3 border ">{{ user.complemento }}</td>
+                </tr>
+            </ng-template>
+        </table>
+    </div>
+</div>
