@@ -1,9 +1,9 @@
 <div class="relative">
-    <input [formControl]="control" [id]="controlName" [placeholder]="placeholder" [type]="type"
-    autocomplete="off" class="h-12 w-full p-3 pl-6 border-[1px] border-slate-300 text-base text-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none block disabled:bg-gray-200 disabled:text-slate-600 disabled:border-slate-300" />
-    
-    <small *ngIf="getFieldError()"
-           class="absolute top-full mt-1 text-red-500 text-xs">
-      {{ getFieldError() }}
-    </small>
+  <input [formControl]="control" [id]="controlName" [placeholder]="placeholder" [type]="type" autocomplete="off"
+    [attr.maxlength]="maxlength"
+    class="h-12 w-full p-3 border-[1px] border-slate-300 text-sm text-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none block disabled:bg-gray-200 disabled:text-slate-600 disabled:border-slate-300" />
+
+  <small *ngIf="getFieldError()" class="text-red-500 text-xs">
+    {{ getFieldError() }}
+  </small>
 </div>

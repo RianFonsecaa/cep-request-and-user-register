@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { viaCepResponse } from '../models/ViaCepResponse';
+import { ViaCepResponse } from '../models/ViaCepResponse';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,9 @@ import { viaCepResponse } from '../models/ViaCepResponse';
 export class viaCepRequestService {
   viaCepUrl: string = environment.viaCepUrl;
 
-  constructor(private httpRequest: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getAdressByCep(cep: string){
-    return this.httpRequest.get<viaCepResponse>(this.viaCepUrl + cep + "/json/")
+  getAdressByCep(cep: string) {
+    return this.httpClient.get<ViaCepResponse>(this.viaCepUrl + cep + "/json/");
   }
 }

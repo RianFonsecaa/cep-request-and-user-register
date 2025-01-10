@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "nome": "John Doe",
+      "cpf": "000.000.000-00",
+      "dataNascimento": "1990-01-01",
+      "email": "johndoe@example.com",
+      "cep": "00000-000",
+      "estado": "São Paulo",
+      "cidade": "São Paulo",
+      "bairro": "Centro",
+      "rua": "Rua Exemplo",
+      "numero": "123",
+      "complemento": "Apt 45"
+    },
+    {
+      "id": "9b4a",
+      "nome": "Erick jesus santos",
+      "cpf": "123.568.866-54",
+      "dataNascimento": "2005-06-22",
+      "email": "erickreu11@gmail.com",
+      "cep": "44380-000",
+      "estado": "Bahia",
+      "cidade": "Cruz das Almas",
+      "bairro": "Embira",
+      "rua": "Embira",
+      "numero": "67",
+      "complemento": "eu rian"
+    },
+    {
+      "id": "cb33",
+      "nome": "Rian Silva da Fonseca",
+      "cpf": "112.943.255-66",
+      "dataNascimento": "2004-03-08",
+      "email": "riansfonseca@gmail.com",
+      "cep": "44380-000",
+      "estado": "Bahia",
+      "cidade": "Cruz das Almas",
+      "bairro": "Dona Rosa",
+      "rua": "Deoclécio do Carmo",
+      "numero": "278",
+      "complemento": "Casa branca, de Esquina"
+    }
+  ]
+}

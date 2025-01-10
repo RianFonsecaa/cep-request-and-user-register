@@ -1,18 +1,16 @@
-
-<main class="flex flex-row justify-center p-12 space-x-6 h-screen mb-14">
-
-    <div class="p-1 space-y-6 w-[552px]">
+<main class="flex flex-row h-[730px] justify-center p-12 space-x-6">
+    <section class="flex flex-col p-1 space-y-6 w-4/12 h-full">
         <h2 class="font-bold text-4xl text-gray-700">Cadastro</h2>
         <div class="bg-[#8543ff] p-1 rounded-md w-[104px]"></div>
-        <form id="cadastro-form" class="flex flex-col space-y-6" [formGroup]="registerForm">
+        <form id="cadastro-form" class="flex flex-col space-y-2 w-full" [formGroup]="registerForm">
 
-            <app-primary-input controlName="nome" placeholder="Nome Completo"
-                [control]="getControl('nome')">
+            <app-primary-input controlName="nome" placeholder="Nome Completo" [control]="getControl('nome')"
+                [maxlength]='100'>
             </app-primary-input>
 
             <div class="flex flex-row space-x-2 w-full">
-                <app-primary-input controlName="cpf" placeholder="CPF - 000.000.000-00" type="text"
-                    [control]="getControl('cpf')" class="w-3/4">
+                <app-primary-input controlName="cpf" placeholder="CPF" type="text" [control]="getControl('cpf')"
+                    [maxlength]='14' class="w-3/4">
                 </app-primary-input>
                 <app-primary-input controlName="dataNascimento" placeholder="*Data de Nascimento" type="date"
                     [control]="getControl('dataNascimento')" class="w-2/4">
@@ -20,12 +18,12 @@
             </div>
 
             <app-primary-input controlName="email" placeholder="Endereço de E-mail" type="email"
-                [control]="getControl('email')">
+                [control]="getControl('email')" [maxlength]='254'>
             </app-primary-input>
 
             <div class="flex flex-row space-x-2 w-full">
-                <app-primary-input controlName="cep" placeholder="CEP - 00000-000" type="text" [control]="getControl('cep')"
-                    class="w-2/4">
+                <app-primary-input controlName="cep" placeholder="CEP" type="text" [control]="getControl('cep')"
+                    [maxlength]='9' class="w-2/4">
                 </app-primary-input>
                 <app-primary-input controlName="estado" placeholder="Estado" type="text"
                     [control]="getControl('estado')" class="w-3/4">
@@ -35,28 +33,79 @@
             <app-primary-input controlName="cidade" placeholder="Cidade" type="text" [control]="getControl('cidade')">
             </app-primary-input>
 
-            <app-primary-input controlName="bairro" placeholder="Bairro" type="text" [control]="getControl('bairro')">
+            <app-primary-input controlName="bairro" placeholder="Bairro" type="text" [control]="getControl('bairro')"
+                [maxlength]='50'>
             </app-primary-input>
 
-            <app-primary-input controlName="rua" placeholder="Rua" type="text" [control]="getControl('rua')">
+            <app-primary-input controlName="rua" placeholder="Rua" type="text" [control]="getControl('rua')"
+                [maxlength]='100'>
             </app-primary-input>
 
             <div class="flex flex-row space-x-2 w-full">
                 <app-primary-input controlName="numero" placeholder="Número" type="text"
-                    [control]="getControl('numero')" class="w-4/12">
+                    [control]="getControl('numero')" [maxlength]='10' class="w-4/12">
                 </app-primary-input>
                 <app-primary-input controlName="complemento" placeholder="Complemento" type="text"
-                    [control]="getControl('complemento')" class="w-10/12">
+                    [control]="getControl('complemento')" [maxlength]='50' class="w-10/12">
                 </app-primary-input>
             </div>
 
             <div class="flex w-full justify-center pt-5">
-                <button type="button" class="focus:outline-none h-16 w-3/5 text-white text-lg transition-all duration-300 shadow-md shadow-slate-500 bg-[#7226ff] hover:bg-[#522fb4] focus:ring-4 focus:ring-[#9f6dfd] font-medium rounded-lg px-5 py-2.5 mb-2">Enviar</button>
+                <button (click)="submit()" type="submit" [disabled]="registerForm.invalid" [ngClass]="{
+                  'bg-[#7226ffa9] text-opacity-60 border-0 cursor-not-allowed': registerForm.invalid,
+                  'bg-[#7226ff] shadow-md hover:bg-[#522fb4]': registerForm.valid
+                }"
+                    class="focus:outline-none h-16 w-3/5 text-white text-lg transition-all duration-300 shadow-md shadow-slate-500 bg-[#7226ff] hover:bg-[#522fb4] focus:ring-4 focus:ring-[#9f6dfd] font-medium rounded-lg px-5 py-2.5 mb-2">Enviar</button>
             </div>
         </form>
-    </div>
+    </section>
 
-    <div class="p-1 bg-gray-300 border-2 w-[1174px]">
 
-    </div>
+    <section class="flex flex-col space-y-2 w-8/12 h-full">
+        <div class="flex flex-row py-2 h-1/12">
+            <input type="text" placeholder="Buscar por nome"
+                class="h-10 w-4/12 border-2 border-slate-300 text-sm text-slate-600 rounded-l-lg focus:ring-1 focus:ring-blue-500 focus:outline-none p-3 ">
+            <button class="flex justify-center items-center bg-primaryColor h-10 w-12 rounded-r-lg">
+                <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                        d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                </svg>
+
+            </button>
+        </div>
+
+        <div class="overflow-scroll h-11/12 border-2 border-gray-300">
+            <table class="w-full table-fixed bg-white border">
+                <thead>
+                    <tr class="bg-secondaryColor text-white">
+                        <th class="p-4 border text-center w-32">ID</th>
+                        <th class="p-4 border text-center w-72">Nome</th>
+                        <th class="p-4 border text-center w-72">CPF</th>
+                        <th class="p-4 border text-center w-72">Data de Nascimento</th>
+                        <th class="p-4 border text-center w-72">Email</th>
+                        <th class="p-4 border text-center w-44">CEP</th>
+                        <th class="p-4 border text-center w-60">Estado</th>
+                        <th class="p-4 border text-center w-60">Cidade</th>
+                        <th class="p-4 border text-center w-96">Endereço</th>
+                        <th class="p-4 border text-center w-80">Complemento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users" class="text-sm">
+                        <td class="p-2 border text-center">{{ user.id }}</td>
+                        <td class="p-2 border text-center">{{ user.nome }}</td>
+                        <td class="p-2 border text-center">{{ user.cpf }}</td>
+                        <td class="p-2 border text-center">{{ user.dataNascimento }}</td>
+                        <td class="p-2 border text-center">{{ user.email }}</td>
+                        <td class="p-2 border text-center">{{ user.cep }}</td>
+                        <td class="p-2 border text-center">{{ user.estado }}</td>
+                        <td class="p-2 border text-center">{{ user.cidade }}</td>
+                        <td class="p-2 border text-center">{{ user.rua }}, {{ user.numero }} - {{ user.bairro }}</td>
+                        <td class="p-2 border text-center">{{ user.complemento }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </main>
