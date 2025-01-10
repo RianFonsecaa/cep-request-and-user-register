@@ -66,13 +66,18 @@ export class UserService {
     });
   }
 
-  getUserByName(nome: string, users: User[]): User[] {
-    if (!nome) return users;
-    console.log('Nome para filtrar:', nome);
+  getUserByField(field: keyof User, value: string, users: User[]): User[] {
+    if (!value || !field) return users;
 
-    return users.filter(user =>
-      user.nome && user.nome.toLowerCase().includes(nome.toLowerCase())
-    );
+    console.log(`Campo para filtrar: ${field}, Valor: ${value}`);
+
+    return users.filter(user => {
+      const userField = user[field];
+      return (
+        userField &&
+        userField.toString().toLowerCase().includes(value.toLowerCase())
+      );
+    });
   }
 
   deleteUser(id: string): void {

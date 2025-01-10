@@ -2,7 +2,7 @@ export interface User {
     id: string;
     nome: string;
     cpf: string;
-    dataNascimento: string;
+    nascimento: string;
     email: string;
     cep: string;
     estado: string;

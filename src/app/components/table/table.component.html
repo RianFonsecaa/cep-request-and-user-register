@@ -28,20 +28,40 @@
     </div>
 </div>
 
-<div class="flex flex-col space-y-2 h-full">
-    <form (submit)="search(searchField); $event.preventDefault()"
-        class="flex flex-row rounded-lg h-14 p-1 w-fit bg-slate-50 border outline-none focus-within:ring-1 focus-within:ring-blue-500">
-        <input #searchField type="text" placeholder="Buscar por nome"
-            class="h-full w-full text-sm bg-slate-50 text-slate-600 rounded-l-lg group outline-none p-3">
-        <button type="submit" class="flex justify-center items-center text-white bg-primaryColor p-2 m-1 rounded-lg">
-            <svg class="w-6 h-6 text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-            </svg>
-            Buscar
-        </button>
-    </form>
+<div class="flex flex-col space-y-3 h-full">
+    <div class="flex flex-col w-2/3">
+        <p class="flex text-gray-500 text-sm">
+            Buscar por: <span class="font-medium pl-1">{{ selectedField | titlecase}}</span>
+        </p>
+        <div class="flex flex-row space-x-2 h-[60px] w-full">
+            <!-- Texto e formulário -->
+
+            <form (submit)="search(searchInput.value); $event.preventDefault()"
+                class="flex flex-row p-2 h-full rounded-lg bg-slate-50 border-2 border-gray-300 outline-none focus-within:ring-1 focus-within:ring-blue-500">
+                <!-- Campo de entrada -->
+                <input #searchInput type="text"
+                    class="w-full text-sm bg-slate-50 text-slate-600 rounded-l-lg outline-none p-3">
+                <!-- Botão -->
+                <button type="submit"
+                    class="flex justify-center items-center text-white bg-primaryColor px-4 rounded-lg">
+                    <svg class="w-5 h-5 text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                    </svg>
+                    Buscar
+                </button>
+            </form>
+            <!-- Seletor de campo -->
+            <select
+                class="flex text-center h-full border border-primaryColor text-primaryColor font-bold outline-none text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+                (change)="onCampoChange($event)">
+                <option *ngFor="let campo of campos" [value]="campo" class="capitalize">
+                    {{ campo.toLocaleUpperCase()}}
+                </option>
+            </select>
+        </div>
+    </div>
 
     <div class="overflow-scroll h-11/12 border-2 border-gray-300">
         <table class="w-full table-auto bg-white border whitespace-nowrap">
@@ -61,7 +81,7 @@
             </thead>
             <tbody *ngIf="filteredUsers.length > 0; else allUsers">
                 <tr *ngFor="let user of filteredUsers" class="text-sm">
-                    <td class="flex flex-row bg-gray-200 border border-white justify-center space-x-2 p-2 text-center">
+                    <td class="flex flex-row bg-gray-200 border border-white justify-center space-x-2 p-3 text-center">
                         <button class="transition duration-155 hover:scale-125" (click)="update(user.id)">
                             <svg class="w-6 h-6 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -82,7 +102,7 @@
                     </td>
                     <td class="p-3 border">{{ user.nome }}</td>
                     <td class="p-3 border">{{ user.cpf }}</td>
-                    <td class="p-3 border">{{ user.dataNascimento }}</td>
+                    <td class="p-3 border">{{ user.nascimento }}</td>
                     <td class="p-3 border">{{ user.email }}</td>
                     <td class="p-3 border">{{ user.cep }}</td>
                     <td class="p-3 border">{{ user.estado }}</td>
@@ -113,7 +133,7 @@
                     </td>
                     <td class="p-3 border ">{{ user.nome }}</td>
                     <td class="p-3 border ">{{ user.cpf }}</td>
-                    <td class="p-3 border ">{{ user.dataNascimento }}</td>
+                    <td class="p-3 border ">{{ user.nascimento }}</td>
                     <td class="p-3 border ">{{ user.email }}</td>
                     <td class="p-3 border ">{{ user.cep }}</td>
                     <td class="p-3 border ">{{ user.estado }}</td>
