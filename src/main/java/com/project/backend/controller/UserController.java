@@ -3,6 +3,8 @@ package com.project.backend.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,35 +15,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.model.dto.UserDto;
-import com.project.backend.service.UserService;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public interface UserController {
 
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
-    public UserDto create(@RequestBody UserDto newUser) {
-        return userService.create(newUser);
-    }
+    ResponseEntity<UserDto> create(@RequestBody UserDto newUser);
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping
-    public UserDto update(@RequestBody UserDto user) {
-        return userService.update(user);
-    }
+    ResponseEntity<UserDto> update(@RequestBody UserDto user);
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {
-        userService.delete(id);
-    }
+    ResponseEntity<Void> delete(@PathVariable UUID id);
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
-    public List<UserDto> getAll() {
-        return userService.getAll();
-    }
+    ResponseEntity<List<UserDto>> getAll();
+
 }
