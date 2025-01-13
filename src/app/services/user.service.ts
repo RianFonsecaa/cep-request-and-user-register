@@ -17,15 +17,15 @@ export class UserService {
   private usersSubject = new BehaviorSubject<User[]>([]); // Usando BehaviorSubject para garantir a reatividade
   users$: Observable<User[]> = this.usersSubject.asObservable();
 
-  private userIdSubject = new Subject<string | null>();
-  userId$: Observable<string | null> = this.userIdSubject.asObservable();
+  private userSubject = new Subject<User | null>();
+  user$: Observable<User | null> = this.userSubject.asObservable();
 
   constructor(private httpClient: HttpClient) {
     this.fetchUsers(); // Inicializa a lista de usuários
   }
 
-  setUserId(id: string): void {
-    this.userIdSubject.next(id);
+  emitUser(user: User): void {
+    this.userSubject.next(user);
   }
 
   getUserById(id: string): Observable<User> {
@@ -56,7 +56,7 @@ export class UserService {
   }
 
   fetchUsers(): void {
-    this.httpClient.get<User[]>(this.jsonServerUrl).subscribe({
+    this.httpClient.get<User[]>("http://localhost:8080/users").subscribe({
       next: (users) => {
         this.usersSubject.next(users); // Atualiza o BehaviorSubject com os novos usuários
       },
@@ -69,8 +69,6 @@ export class UserService {
   getUserByField(field: keyof User, value: string, users: User[]): User[] {
     if (!value || !field) return users;
 
-    console.log(`Campo para filtrar: ${field}, Valor: ${value}`);
-
     return users.filter(user => {
       const userField = user[field];
       return (
@@ -81,7 +79,7 @@ export class UserService {
   }
 
   deleteUser(id: string): void {
-    this.httpClient.delete<void>(`${this.jsonServerUrl}/${id}`).subscribe({
+    this.httpClient.delete<void>(`http://localhost:8080/users/${id}`).subscribe({
       next: () => {
         this.fetchUsers(); // Atualiza a lista após deletar
         console.log('Usuário deletado e lista de usuários atualizada');
@@ -93,11 +91,12 @@ export class UserService {
   }
 
   editUser(updatedUser: User, id: string): void {
-    this.httpClient.put<User>(`${this.jsonServerUrl}/${id}`, updatedUser).subscribe({
+    const editUserRequest: User = updatedUser;
+    editUserRequest.id = id;
+    this.httpClient.put<User>("http://localhost:8080/users", editUserRequest).subscribe({
       next: () => {
         this.fetchUsers();
-        this.userIdSubject.next(null);
-        console.log('Usuário editado:', updatedUser);
+        this.userSubject.next(null);
       },
       error: (err) => {
         console.error('Erro ao editar usuário:', err);

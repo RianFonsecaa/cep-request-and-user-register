@@ -52,8 +52,8 @@ export class TableComponent {
     this.closeModal();
   }
 
-  update(id: string): void {
-    this.userService.setUserId(id);
+  update(user: User): void {
+    this.userService.emitUser(user);
   }
 
   onCampoChange(event: Event): void {

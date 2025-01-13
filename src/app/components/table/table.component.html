@@ -82,7 +82,7 @@
             <tbody *ngIf="filteredUsers.length > 0; else allUsers">
                 <tr *ngFor="let user of filteredUsers" class="text-sm">
                     <td class="flex flex-row bg-gray-200 border border-white justify-center space-x-2 p-3 text-center">
-                        <button class="transition duration-155 hover:scale-125" (click)="update(user.id)">
+                        <button class="transition duration-155 hover:scale-125" (click)="update(user)">
                             <svg class="w-6 h-6 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -114,7 +114,7 @@
             <ng-template #allUsers>
                 <tr *ngFor="let user of users" class="text-sm">
                     <td class="flex flex-row bg-gray-200 border border-white justify-center space-x-2 p-3 text-center">
-                        <button class="transition duration-155 hover:scale-125" (click)="update(user.id)">
+                        <button class="transition duration-155 hover:scale-125" (click)="update(user)">
                             <svg class="w-6 h-6 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"

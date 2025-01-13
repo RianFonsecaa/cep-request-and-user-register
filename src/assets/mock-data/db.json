@@ -17,7 +17,7 @@
     {
       "nome": "João Oliveira",
       "cpf": "123.456.789-00",
-      "nascimento": "1990-03-15",
+      "nascimento": "1992-02-13",
       "email": "joao.oliveira@example.com",
       "cep": "01001-000",
       "estado": "São Paulo",
@@ -169,9 +169,9 @@
       "id": 33
     },
     {
-      "nome": "Rian Silva da Fonseca",
+      "nome": "Rian Silva da Fonsec",
       "cpf": "112.943.255-66",
-      "nascimento": "2004-03-08",
+      "dataNascimento": "2025-01-08",
       "email": "riansfonseca3@gmail.com",
       "cep": "44380-000",
       "estado": "Bahia",

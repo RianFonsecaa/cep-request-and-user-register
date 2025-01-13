@@ -16,7 +16,7 @@ import { User } from '../../models/User';
 })
 export class FormComponent {
   registerForm: FormGroup;
-  userId: string = '';
+  user?: User;
 
   constructor(
     private viaCepRequest: viaCepRequestService, private userService: UserService
@@ -27,7 +27,7 @@ export class FormComponent {
         Validators.required,
         Validators.pattern(/^\d{3}(\.\d{3}){2}-\d{2}$|^\d{11}$/)
       ]),
-      dataNascimento: new FormControl('', Validators.required),
+      nascimento: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       cep: new FormControl('', [
         Validators.required,
@@ -43,22 +43,25 @@ export class FormComponent {
   }
 
   ngOnInit(): void {
-    this.userService.userId$.subscribe((id: string | null) => {
-      if (id) {
-        this.userId = id;
+    this.userService.user$.subscribe((user: User | null) => {
+      if (user) {
+        this.user = user;
         this.loadUserData();
+      } else {
+        this.user = undefined;
       }
     });
   }
 
   loadUserData(): void {
-    this.userService.getUserById(this.userId).subscribe((user: User) => {
-      this.toggleFieldState('estado', user.estado);
-      this.toggleFieldState('cidade', user.cidade);
-      this.toggleFieldState('bairro', user.bairro);
-      this.toggleFieldState('rua', user.rua);
-      this.registerForm.patchValue(user);
-    });
+    if (this.user) {
+      // Verifica se a propriedade existe antes de usá-la
+      this.toggleFieldState('estado', this.user.estado);
+      this.toggleFieldState('cidade', this.user.cidade);
+      this.toggleFieldState('bairro', this.user.bairro);
+      this.toggleFieldState('rua', this.user.rua);
+      this.registerForm.patchValue(this.user);
+    }
   }
 
   getControl(name: string): FormControl {
@@ -99,8 +102,8 @@ export class FormComponent {
   submit() {
     if (this.registerForm.valid) {
       const userData = this.registerForm.getRawValue();
-      if (this.userId) {
-        this.userService.editUser(userData, this.userId);
+      if (this.user) {
+        this.userService.editUser(userData, this.user.id);
       } else {
         this.userService.createUser(userData);
       }
