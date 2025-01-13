@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start:mock": "npx json-server src/assets/mock-data/db.json",
     "start:app": "ng serve",
-    "start": "npm-run-all --parallel start:mock start:app",
+    "start": "npm-run-all --parallel start:app",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
