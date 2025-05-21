@@ -15,7 +15,7 @@ export class TableComponent {
   users: User[] = [];
   filteredUsers: User[] = [];
   isModalOpen: boolean = false;
-  searchValue: string = '';
+  searchValue: FormControl = new FormControl('');
   selectedField: keyof User = 'nome';
   userId: string = '';
   campos: (keyof User)[] = [
@@ -25,6 +25,12 @@ export class TableComponent {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.searchValue.valueChanges.subscribe(value => {
+      if (this.users.length) {
+        this.filteredUsers = this.userService.getUserByField(this.selectedField, value, this.users);
+      }
+    });
+
     this.userService.users$.subscribe((users) => {
       this.users = users;
       this.updateFilteredUsers();
@@ -40,13 +46,6 @@ export class TableComponent {
     this.isModalOpen = false;
   }
 
-  // Atualizando o método de busca para usar o FormControl diretamente
-  search(searchInput: string): void {
-    this.searchValue = searchInput.trim().toLowerCase();
-    this.filteredUsers = this.userService.getUserByField(this.selectedField, this.searchValue, this.users);
-    searchInput = '';
-  }
-
   delete(id: string): void {
     this.userService.deleteUser(id);
     this.closeModal();
@@ -57,13 +56,14 @@ export class TableComponent {
   }
 
   onCampoChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement; // Fazendo o casting para HTMLSelectElement
-    this.selectedField = selectElement.value as keyof User; // Atualiza o valor selecionado
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedField = selectElement.value as keyof User;
+    this.updateFilteredUsers();
   }
 
   private updateFilteredUsers(): void {
-    if (this.searchValue) {
-      this.filteredUsers = this.userService.getUserByField(this.selectedField, this.searchValue, this.users);
+    if (this.searchValue.value) {
+      this.filteredUsers = this.userService.getUserByField(this.selectedField, this.searchValue.value, this.users);
     } else {
       this.filteredUsers = this.users;
     }
