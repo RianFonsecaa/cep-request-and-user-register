@@ -4,6 +4,23 @@ Este é um projeto Full Stack simples desenvolvido com foco em portfólio. Ele c
 
 ---
 
+## 📺 Demonstração do Projeto
+Demonstrações visuais de cada funcionalidade da aplicação:
+
+### 👤 Cadastro com preenchimento automático via CEP
+![](/frontend/src/assets/gif/Post.gif)
+
+### 🔍 Busca dinâmica de usuários por diferentes campos
+![](/frontend/src/assets/gif/Get.gif)
+
+### ✏️ Edição de usuários
+![](/frontend/src/assets/gif/Update.gif)
+
+### ❌ Exclusão de usuários
+![](/frontend/src/assets/gif/Delete.gif)
+
+---
+
 ## 🚀 Tecnologias e Ferramentas
 
 ### Front-end
